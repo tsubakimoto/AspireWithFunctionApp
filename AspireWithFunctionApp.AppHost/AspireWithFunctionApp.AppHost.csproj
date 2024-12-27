@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DurableFunctionApp1\DurableFunctionApp1.csproj" />
     <ProjectReference Include="..\FunctionApp1\FunctionApp1.csproj" />
   </ItemGroup>
 

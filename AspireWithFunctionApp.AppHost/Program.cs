@@ -19,4 +19,6 @@ builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     .WithReference(tables)
     ;
 
+builder.AddAzureFunctionsProject<Projects.DurableFunctionApp1>("durablefunctionapp1");
+
 builder.Build().Run();
