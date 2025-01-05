@@ -13,8 +13,7 @@ var secrets = builder.AddAzureKeyVault("secrets");
 
 var openai = builder.AddAzureOpenAI("openai");
 
-var cosmos = builder.AddAzureCosmosDB("cosmos");
-var cosmosdb = cosmos.AddDatabase("mydb");
+var cosmosdb = builder.AddAzureCosmosDB("cosmos").AddDatabase("mydb");
 
 var search = builder.AddAzureSearch("search");
 
