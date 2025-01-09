@@ -1,19 +1,25 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var eventHubs = builder.AddAzureEventHubs("eventhubs").AddEventHub("items");
+var eventHubs = builder.AddAzureEventHubs("eventhubs").RunAsEmulator().AddEventHub("items");
 
-var serviceBus = builder.AddAzureServiceBus("servicebus").AddTopic("mytopic", ["mysubscription"]);
-
-var storage = builder.AddAzureStorage("storage");
+var storage = builder.AddAzureStorage("storage").RunAsEmulator();
 var blobs = storage.AddBlobs("blobs");
 var queues = storage.AddQueues("queues");
 var tables = storage.AddTables("tables");
 
+var cosmosdb = builder.AddAzureCosmosDB("cosmos").RunAsEmulator().AddDatabase("mydb");
+
+var sql = builder.AddAzureSqlServer("sql").RunAsContainer().AddDatabase("sqldb");
+
+var redis = builder.AddAzureRedis("redis").RunAsContainer();
+
+var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").RunAsContainer().AddDatabase("postgresdb");
+
+var serviceBus = builder.AddAzureServiceBus("servicebus").AddTopic("mytopic", ["mysubscription"]);
+
 var secrets = builder.AddAzureKeyVault("secrets");
 
 var openai = builder.AddAzureOpenAI("openai");
-
-var cosmosdb = builder.AddAzureCosmosDB("cosmos").AddDatabase("mydb");
 
 var search = builder.AddAzureSearch("search");
 
@@ -21,38 +27,33 @@ var webPubSub = builder.AddAzureWebPubSub("wps");
 
 var logAnalytics = builder.AddAzureLogAnalyticsWorkspace("log");
 
-var annInsights = builder.AddAzureApplicationInsights("appinsights");
-
-var sql = builder.AddAzureSqlServer("sql").AddDatabase("sqldb");
-
-var redis = builder.AddAzureRedis("redis");
+var appInsights = builder.AddAzureApplicationInsights("appinsights");
 
 var appConfig = builder.AddAzureAppConfiguration("appconfig");
-
-var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").AddDatabase("postgresdb");
 
 var signalR = builder.AddAzureSignalR("signalr");
 
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
+    .WithReference(eventHubs).WaitFor(eventHubs)
+    .WithReference(blobs).WaitFor(blobs)
+    .WithReference(queues).WaitFor(queues)
+    .WithReference(tables).WaitFor(tables)
+    .WithReference(cosmosdb).WaitFor(cosmosdb)
+    .WithReference(sql).WaitFor(sql)
+    .WithReference(redis).WaitFor(redis)
+    .WithReference(postgresdb).WaitFor(postgresdb)
+    .WithReference(serviceBus).WaitFor(serviceBus)
+    .WithReference(secrets).WaitFor(secrets)
+    .WithReference(openai).WaitFor(openai)
+    .WithReference(search).WaitFor(search)
+    .WithReference(webPubSub).WaitFor(webPubSub)
+    //.WithReference(logAnalytics).WaitFor(logAnalytics)
+    .WithReference(appInsights).WaitFor(appInsights)
+    .WithReference(appConfig).WaitFor(appConfig)
+    .WithReference(signalR).WaitFor(signalR)
+    .WithHostStorage(storage)
     .WithExternalHttpEndpoints()
-    .WithReference(eventHubs)
-    .WithReference(serviceBus)
-    .WithReference(blobs)
-    .WithReference(queues)
-    .WithReference(tables)
-    .WithReference(secrets)
-    .WithReference(openai)
-    .WithReference(cosmosdb)
-    .WithReference(search)
-    .WithReference(webPubSub)
-    //.WithReference(logAnalytics)
-    .WithReference(annInsights)
-    .WithReference(sql)
-    .WithReference(redis)
-    .WithReference(appConfig)
-    .WithReference(postgresdb)
-    .WithReference(signalR)
     ;
 
 builder.AddAzureFunctionsProject<Projects.DurableFunctionApp1>("durablefunctionapp1");
