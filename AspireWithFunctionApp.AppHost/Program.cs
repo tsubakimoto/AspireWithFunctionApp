@@ -1,5 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+#if false
 var eventHubs = builder.AddAzureEventHubs("eventhubs").RunAsEmulator().AddEventHub("items");
 
 var storage = builder.AddAzureStorage("storage").RunAsEmulator();
@@ -57,5 +58,23 @@ builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     ;
 
 builder.AddAzureFunctionsProject<Projects.DurableFunctionApp1>("durablefunctionapp1");
+#endif
+
+#region AWS
+//var awsConfig = builder.AddAWSSDKConfig()
+//    .WithProfile("default")
+//    .WithRegion(Amazon.RegionEndpoint.APNortheast1);
+//builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
+//    .WithReference(awsConfig);
+
+var awsConfig = builder.AddAWSSDKConfig()
+    .WithProfile("default")
+    .WithRegion(Amazon.RegionEndpoint.APNortheast1);
+var awsResources = builder.AddAWSCloudFormationTemplate("AspireSampleDevResources", "app-resources.template")
+    .WithParameter("DefaultVisibilityTimeout", "30")
+    .WithReference(awsConfig);
+builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
+    .WithReference(awsResources);
+#endregion
 
 builder.Build().Run();

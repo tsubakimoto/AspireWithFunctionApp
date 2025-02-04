@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+    <PackageReference Include="Aspire.Hosting.AWS" Version="9.0.0" />
 	<PackageReference Include="Aspire.Hosting.Azure.AppConfiguration" Version="9.0.0" />
 	<PackageReference Include="Aspire.Hosting.Azure.AppContainers" Version="9.0.0" />
 	<PackageReference Include="Aspire.Hosting.Azure.ApplicationInsights" Version="9.0.0" />
@@ -35,6 +36,12 @@
   <ItemGroup>
     <ProjectReference Include="..\DurableFunctionApp1\DurableFunctionApp1.csproj" />
     <ProjectReference Include="..\FunctionApp1\FunctionApp1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="app-resources.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
