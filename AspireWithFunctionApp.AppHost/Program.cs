@@ -1,19 +1,25 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var eventHubs = builder.AddAzureEventHubs("eventhubs").RunAsEmulator().AddEventHub("items");
+//var eventHubs = builder.AddAzureEventHubs("eventhubs").RunAsEmulator().AddEventHub("items");
+var eventHubs = builder.AddAzureEventHubs("eventhubs").AddEventHub("items");
 
-var storage = builder.AddAzureStorage("storage").RunAsEmulator();
+//var storage = builder.AddAzureStorage("storage");.RunAsEmulator();
+var storage = builder.AddAzureStorage("storage");
 var blobs = storage.AddBlobs("blobs");
 var queues = storage.AddQueues("queues");
 var tables = storage.AddTables("tables");
 
-var cosmosdb = builder.AddAzureCosmosDB("cosmos").RunAsEmulator().AddDatabase("mydb");
+//var cosmosdb = builder.AddAzureCosmosDB("cosmos").RunAsEmulator().AddDatabase("mydb");
+var cosmosdb = builder.AddAzureCosmosDB("cosmos").AddDatabase("mydb");
 
-var sql = builder.AddAzureSqlServer("sql").RunAsContainer().AddDatabase("sqldb");
+//var sql = builder.AddAzureSqlServer("sql").RunAsContainer().AddDatabase("sqldb");
+var sql = builder.AddAzureSqlServer("sql").AddDatabase("sqldb");
 
-var redis = builder.AddAzureRedis("redis").RunAsContainer();
+//var redis = builder.AddAzureRedis("redis").RunAsContainer();
+var redis = builder.AddAzureRedis("redis");
 
-var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").RunAsContainer().AddDatabase("postgresdb");
+//var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").RunAsContainer().AddDatabase("postgresdb");
+var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").AddDatabase("postgresdb");
 
 var serviceBus = builder.AddAzureServiceBus("servicebus").AddTopic("mytopic", ["mysubscription"]);
 
