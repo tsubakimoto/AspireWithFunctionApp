@@ -1,21 +1,21 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var eventHubs = builder.AddAzureEventHubs("eventhubs").RunAsEmulator().AddEventHub("items");
+var eventHubs = builder.AddAzureEventHubs("eventhubs").AddHub("items");
 
-var storage = builder.AddAzureStorage("storage").RunAsEmulator();
+var storage = builder.AddAzureStorage("storage");
 var blobs = storage.AddBlobs("blobs");
 var queues = storage.AddQueues("queues");
 var tables = storage.AddTables("tables");
 
-var cosmosdb = builder.AddAzureCosmosDB("cosmos").RunAsEmulator().AddDatabase("mydb");
+var cosmosdb = builder.AddAzureCosmosDB("cosmos").AddCosmosDatabase("mydb");
 
-var sql = builder.AddAzureSqlServer("sql").RunAsContainer().AddDatabase("sqldb");
+var sql = builder.AddAzureSqlServer("sql").AddDatabase("sqldb");
 
-var redis = builder.AddAzureRedis("redis").RunAsContainer();
+var redis = builder.AddAzureRedis("redis");
 
-var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").RunAsContainer().AddDatabase("postgresdb");
+var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").AddDatabase("postgresdb");
 
-var serviceBus = builder.AddAzureServiceBus("servicebus").AddTopic("mytopic", ["mysubscription"]);
+var serviceBus = builder.AddAzureServiceBus("servicebus").AddServiceBusTopic("mytopic", "mysubscription");
 
 var secrets = builder.AddAzureKeyVault("secrets");
 
@@ -35,6 +35,7 @@ var signalR = builder.AddAzureSignalR("signalr");
 
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
+    .WithHostStorage(storage)
     .WithReference(eventHubs).WaitFor(eventHubs)
     .WithReference(blobs).WaitFor(blobs)
     .WithReference(queues).WaitFor(queues)
@@ -52,7 +53,6 @@ builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     .WithReference(appInsights).WaitFor(appInsights)
     .WithReference(appConfig).WaitFor(appConfig)
     .WithReference(signalR).WaitFor(signalR)
-    .WithHostStorage(storage)
     .WithExternalHttpEndpoints()
     ;
 
