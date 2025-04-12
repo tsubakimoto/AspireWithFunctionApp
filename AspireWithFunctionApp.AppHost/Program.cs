@@ -35,6 +35,7 @@ var signalR = builder.AddAzureSignalR("signalr");
 
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
+    .WithHostStorage(storage)
     .WithReference(eventHubs).WaitFor(eventHubs)
     .WithReference(blobs).WaitFor(blobs)
     .WithReference(queues).WaitFor(queues)
@@ -52,7 +53,6 @@ builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     .WithReference(appInsights).WaitFor(appInsights)
     .WithReference(appConfig).WaitFor(appConfig)
     .WithReference(signalR).WaitFor(signalR)
-    .WithHostStorage(storage)
     .WithExternalHttpEndpoints()
     ;
 
