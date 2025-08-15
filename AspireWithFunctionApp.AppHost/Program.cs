@@ -33,6 +33,8 @@ var appConfig = builder.AddAzureAppConfiguration("appconfig");
 
 var signalR = builder.AddAzureSignalR("signalr").RunAsEmulator();
 
+var chat = builder.AddGitHubModel("chat", "openai/gpt-4o-mini");
+
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     .WithHostStorage(storage)
@@ -53,6 +55,7 @@ builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     .WithReference(appInsights).WaitFor(appInsights)
     .WithReference(appConfig).WaitFor(appConfig)
     .WithReference(signalR).WaitFor(signalR)
+    .WithReference(chat).WaitFor(chat)
     .WithExternalHttpEndpoints()
     ;
 
