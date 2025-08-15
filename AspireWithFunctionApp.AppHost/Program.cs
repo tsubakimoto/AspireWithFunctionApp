@@ -1,21 +1,21 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var eventHubs = builder.AddAzureEventHubs("eventhubs").AddHub("items");
+var eventHubs = builder.AddAzureEventHubs("eventhubs").RunAsEmulator().AddHub("items");
 
-var storage = builder.AddAzureStorage("storage");
+var storage = builder.AddAzureStorage("storage").RunAsEmulator();
 var blobs = storage.AddBlobs("blobs");
 var queues = storage.AddQueues("queues");
 var tables = storage.AddTables("tables");
 
-var cosmosdb = builder.AddAzureCosmosDB("cosmos").AddCosmosDatabase("mydb");
+var cosmosdb = builder.AddAzureCosmosDB("cosmos").RunAsEmulator().AddCosmosDatabase("mydb");
 
-var sql = builder.AddAzureSqlServer("sql").AddDatabase("sqldb");
+var sql = builder.AddAzureSqlServer("sql").RunAsContainer().AddDatabase("sqldb");
 
-var redis = builder.AddAzureRedis("redis");
+var redis = builder.AddAzureRedis("redis").RunAsContainer();
 
-var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").AddDatabase("postgresdb");
+var postgresdb = builder.AddAzurePostgresFlexibleServer("pg").RunAsContainer().AddDatabase("postgresdb");
 
-var serviceBus = builder.AddAzureServiceBus("servicebus").AddServiceBusTopic("mytopic", "mysubscription");
+var serviceBus = builder.AddAzureServiceBus("servicebus").RunAsEmulator().AddServiceBusTopic("mytopic", "mysubscription");
 
 var secrets = builder.AddAzureKeyVault("secrets");
 
@@ -31,7 +31,7 @@ var appInsights = builder.AddAzureApplicationInsights("appinsights");
 
 var appConfig = builder.AddAzureAppConfiguration("appconfig");
 
-var signalR = builder.AddAzureSignalR("signalr");
+var signalR = builder.AddAzureSignalR("signalr").RunAsEmulator();
 
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
