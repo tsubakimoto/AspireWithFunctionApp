@@ -36,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DurableFunctionApp1\DurableFunctionApp1.csproj" />
     <ProjectReference Include="..\FunctionApp1\FunctionApp1.csproj" />
+    <ProjectReference Include="..\GitHubModelsFunctionApp\GitHubModelsFunctionApp.csproj" />
   </ItemGroup>
 
 </Project>

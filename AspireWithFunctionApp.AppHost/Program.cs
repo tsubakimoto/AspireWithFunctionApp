@@ -33,7 +33,8 @@ var appConfig = builder.AddAzureAppConfiguration("appconfig");
 
 var signalR = builder.AddAzureSignalR("signalr").RunAsEmulator();
 
-var chat = builder.AddGitHubModel("chat", "openai/gpt-4o-mini");
+// https://learn.microsoft.com/en-us/dotnet/aspire/github/github-models-integration?tabs=dotnet-cli
+var ghModelsChat = builder.AddGitHubModel("chat", "openai/gpt-4o-mini");
 
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
@@ -55,10 +56,13 @@ builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
     .WithReference(appInsights).WaitFor(appInsights)
     .WithReference(appConfig).WaitFor(appConfig)
     .WithReference(signalR).WaitFor(signalR)
-    .WithReference(chat).WaitFor(chat)
+    .WithReference(ghModelsChat).WaitFor(ghModelsChat)
     .WithExternalHttpEndpoints()
     ;
 
 builder.AddAzureFunctionsProject<Projects.DurableFunctionApp1>("durablefunctionapp1");
+
+builder.AddAzureFunctionsProject<Projects.GitHubModelsFunctionApp>("githubmodelsfunctionapp")
+    .WithReference(ghModelsChat).WaitFor(ghModelsChat);
 
 builder.Build().Run();

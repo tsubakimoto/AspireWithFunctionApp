@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35507.96
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.10828.68
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireWithFunctionApp.AppHost", "AspireWithFunctionApp.AppHost\AspireWithFunctionApp.AppHost.csproj", "{CB9ECAC8-C593-47CA-B36B-3E0B51A63E7E}"
 EndProject
@@ -9,6 +9,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionApp1", "FunctionApp1\FunctionApp1.csproj", "{245563A0-C1B9-3806-EC0F-1C822C9D34F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurableFunctionApp1", "DurableFunctionApp1\DurableFunctionApp1.csproj", "{1A34DEB1-B608-8556-059B-50DBC1CE6E78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubModelsFunctionApp", "GitHubModelsFunctionApp\GitHubModelsFunctionApp.csproj", "{118A695A-3C42-AAAD-2E05-6E04ED329E7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{1A34DEB1-B608-8556-059B-50DBC1CE6E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A34DEB1-B608-8556-059B-50DBC1CE6E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A34DEB1-B608-8556-059B-50DBC1CE6E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{118A695A-3C42-AAAD-2E05-6E04ED329E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{118A695A-3C42-AAAD-2E05-6E04ED329E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{118A695A-3C42-AAAD-2E05-6E04ED329E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{118A695A-3C42-AAAD-2E05-6E04ED329E7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
