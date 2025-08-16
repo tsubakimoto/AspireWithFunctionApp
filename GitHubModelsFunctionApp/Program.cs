@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 var builder = FunctionsApplication.CreateBuilder(args);
 
 // https://learn.microsoft.com/en-us/dotnet/aspire/github/github-models-integration?tabs=dotnet-cli#using-openai-client
-builder.AddOpenAIClient("chat").AddChatClient();
+builder.AddOpenAIClient("ghModelsChat").AddChatClient();
 
 builder.AddServiceDefaults();
 

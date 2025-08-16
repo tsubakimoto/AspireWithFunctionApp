@@ -34,7 +34,11 @@ var appConfig = builder.AddAzureAppConfiguration("appconfig");
 var signalR = builder.AddAzureSignalR("signalr").RunAsEmulator();
 
 // https://learn.microsoft.com/en-us/dotnet/aspire/github/github-models-integration?tabs=dotnet-cli
-var ghModelsChat = builder.AddGitHubModel("chat", "openai/gpt-4o-mini");
+var ghModelsChat = builder.AddGitHubModel("ghModelsChat", "openai/gpt-4o-mini");
+
+// https://learn.microsoft.com/en-us/dotnet/aspire/azureai/azureai-foundry-integration?tabs=dotnet-cli
+var foundry = builder.AddAzureAIFoundry("foundry").RunAsFoundryLocal();
+var foundryChat = foundry.AddDeployment("foundryChat", "phi-3.5-mini", "1", "Microsoft");
 
 // https://learn.microsoft.com/ja-jp/dotnet/aspire/serverless/functions?tabs=dotnet-cli&pivots=visual-studio#add-azure-functions-resource
 builder.AddAzureFunctionsProject<Projects.FunctionApp1>("functionapp1")
@@ -64,5 +68,8 @@ builder.AddAzureFunctionsProject<Projects.DurableFunctionApp1>("durablefunctiona
 
 builder.AddAzureFunctionsProject<Projects.GitHubModelsFunctionApp>("githubmodelsfunctionapp")
     .WithReference(ghModelsChat).WaitFor(ghModelsChat);
+
+builder.AddAzureFunctionsProject<Projects.AzureAIFoundryFunctionApp>("azureaifoundryfunctionapp")
+    .WithReference(foundry).WaitFor(foundry);
 
 builder.Build().Run();
