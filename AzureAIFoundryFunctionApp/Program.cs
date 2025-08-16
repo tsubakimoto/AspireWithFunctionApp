@@ -21,9 +21,9 @@ builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
     .ConfigureFunctionsApplicationInsights();
 
-// Foundry Local
 if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == "Development")
 {
+    // Foundry Local
     var alias = "phi-3.5-mini";
     var manager = await FoundryLocalManager.StartModelAsync(aliasOrModelId: alias);
     var model = await manager.GetModelInfoAsync(aliasOrModelId: alias);
@@ -34,6 +34,11 @@ if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == "Develo
     });
     var chatClient = client.GetChatClient(model?.ModelId).AsIChatClient();
     builder.Services.AddSingleton(chatClient);
+}
+else
+{
+    // https://learn.microsoft.com/en-us/dotnet/aspire/azureai/azureai-foundry-integration?tabs=dotnet-cli#use-a-connection-string
+    builder.AddAzureChatCompletionsClient("foundryChat");
 }
 
 builder.Services.AddSingleton<ChatService>();
